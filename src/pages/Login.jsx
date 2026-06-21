@@ -1,42 +1,39 @@
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-function Login() {
+function Login({ setUser }) {
+  const [inputNama, setInputNama] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = (event) => {
-    event.preventDefault();
-    localStorage.setItem("healthsync_isLoggedIn", "true");
-    navigate("/calculator");
+  const handleLogin = (e) => {
+    e.preventDefault();
+    if (inputNama.trim() !== '') {
+      localStorage.setItem("healthsync_isLoggedIn", "true");
+      localStorage.setItem("healthsync_userName", inputNama);
+
+      setUser({ name: inputNama }); 
+
+      navigate('/'); 
+    }
   };
 
   return (
-    <section className="flex min-h-[80vh] items-center justify-center bg-slate-50 px-6">
-      <form
-        onSubmit={handleLogin}
-        className="w-full max-w-md rounded-2xl bg-white p-8 shadow"
-      >
-        <h1 className="mb-2 text-2xl font-bold text-slate-900">
-          Login Simulasi
-        </h1>
-
-        <p className="mb-6 text-sm text-slate-500">
-          Login ini hanya simulasi menggunakan localStorage.
-        </p>
-
-        <input
-          type="text"
-          placeholder="Nama pengguna"
-          className="mb-4 w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-emerald-500"
+    <div className="flex min-h-[80vh] items-center justify-center bg-gray-50">
+      <form onSubmit={handleLogin} className="p-8 bg-white rounded-xl shadow-md border border-gray-100 w-full max-w-sm">
+        <h3 className="mb-6 text-xl font-bold text-center text-gray-800">Login ke HealthSync</h3>
+        <input 
+          type="text" 
+          placeholder="Masukkan Nama Anda" 
+          value={inputNama} 
+          onChange={(e) => setInputNama(e.target.value)}
+          className="border border-gray-300 p-2.5 rounded-lg mb-4 w-full focus:border-emerald-500 focus:outline-none"
+          required
         />
-
-        <button
-          type="submit"
-          className="w-full rounded-xl bg-emerald-600 px-4 py-3 font-semibold text-white hover:bg-emerald-700"
-        >
+        <button type="submit" className="bg-emerald-500 hover:bg-emerald-600 transition text-white font-semibold p-2.5 rounded-lg w-full">
           Masuk
         </button>
       </form>
-    </section>
+    </div>
   );
 }
 

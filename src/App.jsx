@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -8,15 +9,29 @@ import Calculator from "./pages/Calculator";
 import Personalization from "./pages/Personalization";
 
 function App() {
+  const [user, setUser] = useState(() => {
+    const isLoggedIn = localStorage.getItem("healthsync_isLoggedIn") === "true";
+    const savedName = localStorage.getItem("healthsync_userName");
+    return isLoggedIn && savedName ? { name: savedName } : null;
+  });
+
+  const handleLogout = () => {
+    // Hapus semua data login dari localStorage
+    localStorage.removeItem("healthsync_isLoggedIn");
+    localStorage.removeItem("healthsync_userName");
+    setUser(null); 
+  };
+
   return (
     <>
-      <Navbar />
+      <Navbar user={user} onLogout={handleLogout} />
 
       <main>
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/articles" element={<Articles />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<Login setUser={setUser} />} />
+          
           <Route
             path="/calculator"
             element={
