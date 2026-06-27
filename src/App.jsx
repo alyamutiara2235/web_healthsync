@@ -5,6 +5,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Landing from "./pages/Landing";
 import Login from "./pages/Login";
 import Articles from "./pages/Articles";
+import ArticleDetail from "./pages/ArticleDetail";
 import Calculator from "./pages/Calculator";
 import Personalization from "./pages/Personalization";
 
@@ -16,7 +17,6 @@ function App() {
   });
 
   const handleLogout = () => {
-    // Hapus semua data login dari localStorage
     localStorage.removeItem("healthsync_isLoggedIn");
     localStorage.removeItem("healthsync_userName");
     setUser(null); 
@@ -30,6 +30,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/articles" element={<Articles />} />
+          <Route path="/articles/:id" element={<ArticleDetail />} />
           <Route path="/login" element={<Login setUser={setUser} />} />
           
           <Route

@@ -3,7 +3,6 @@ function Personalization() {
     <section className="min-h-screen bg-slate-50 py-12 px-6 md:px-12 lg:px-24">
       <div className="max-w-7xl mx-auto">
 
-        {/* Header */}
         <div className="mb-10">
           <span className="text-emerald-600 font-semibold text-sm">
             HealthSync
@@ -18,10 +17,8 @@ function Personalization() {
           </p>
         </div>
 
-        {/* Main Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-          {/* Progress Dashboard */}
           <div className="flex-1 bg-white rounded-2xl p-8 shadow-sm border border-slate-100">
             <h2 className="text-2xl font-bold text-slate-900 mb-6">
               Progress Dashboard
@@ -38,7 +35,6 @@ function Personalization() {
             </div>
           </div>
 
-          {/* Personalization Form */}
           <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
 
             <h2 className="text-xl font-bold text-slate-900 mb-6">

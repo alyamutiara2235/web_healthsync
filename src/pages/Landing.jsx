@@ -20,7 +20,7 @@ function Landing() {
             
             <div className="flex gap-4">
               <Link 
-                to="/Masuk" 
+                to="/login" 
                 className="rounded-full bg-emerald-600 px-5 py-2 text-white hover:bg-emerald-700 font-medium text-sm transition-all shadow-sm block text-center"
               >
                 Mulai Sekarang
@@ -62,8 +62,10 @@ function Landing() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-all duration-300 flex flex-col justify-between">
               <div>
-                <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center text-emerald-600 mb-4 font-bold text-xl">
-                  📰
+                <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center text-emerald-600 mb-4">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                  </svg>
                 </div>
                 <h3 className="text-xl font-bold text-slate-900 mb-2">Artikel Kesehatan</h3>
                 <p className="text-slate-600 text-sm leading-relaxed mb-4">
@@ -77,8 +79,10 @@ function Landing() {
 
             <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-all duration-300 flex flex-col justify-between">
               <div>
-                <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center text-emerald-600 mb-4 font-bold text-xl">
-                  🧮
+                <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center text-emerald-600 mb-4">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                  </svg>
                 </div>
                 <h3 className="text-xl font-bold text-slate-900 mb-2">Kalkulator BMI</h3>
                 <p className="text-slate-600 text-sm leading-relaxed mb-4">
@@ -92,8 +96,10 @@ function Landing() {
 
             <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-all duration-300 flex flex-col justify-between">
               <div>
-                <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center text-emerald-600 mb-4 font-bold text-xl">
-                  📈
+                <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center text-emerald-600 mb-4">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                  </svg>
                 </div>
                 <h3 className="text-xl font-bold text-slate-900 mb-2">Progres Personalisasi</h3>
                 <p className="text-slate-600 text-sm leading-relaxed mb-4">
