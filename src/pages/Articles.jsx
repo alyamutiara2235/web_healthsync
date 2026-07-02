@@ -25,7 +25,7 @@ function Articles() {
 
         <div className="mb-10 animate-fade-in-up">
           <span className="text-emerald-600 font-semibold text-sm">
-            HealthSync
+            RuangSehat
           </span>
           <h1 className="text-4xl font-bold text-slate-900 mt-2">
             Artikel Kesehatan

@@ -7,12 +7,12 @@ function Hero() {
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center justify-items-center w-full">
         
         <div className="flex flex-col justify-center w-full">
-          <span className="text-emerald-600 font-semibold mb-2 block text-sm">HealthSync</span>
+          <span className="text-emerald-600 font-semibold mb-2 block text-sm">RuangSehat</span>
           <h1 className="text-4xl font-bold text-slate-900 md:text-5xl leading-tight mb-4">
-            Simulasi Website Kesehatan Digital
+            Langkah Kecil untuk Tubuh Lebih Sehat
           </h1>
           <p className="max-w-xl text-slate-600 text-sm md:text-base leading-relaxed mb-6">
-            HealthSync membantu pengguna membaca artikel kesehatan, menghitung BMI, dan melihat personalisasi progress kesehatan secara sederhana.
+            RuangSehat hadir sebagai solusi praktis untuk mendukung gaya hidup sehatmu. Temukan panduan nutrisi lewat artikel kesehatan, hitung indeks massa tubuh (BMI) secara instan, dan pantau progres fisikmu dalam satu ruang digital yang sederhana.
           </p>
           <div className="flex gap-4">
             <Link 

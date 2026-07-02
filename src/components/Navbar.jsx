@@ -7,7 +7,7 @@ function Navbar({ user, onLogout }) {
   return (
     <nav className="relative flex items-center justify-between bg-white px-6 py-4 shadow-sm border-b border-gray-100">
       <div className="text-xl font-bold text-emerald-600">
-        <Link to="/">Healthsync</Link>
+        <Link to="/">RuangSehat</Link>
       </div>
 
       <div className="flex items-center space-x-6">
@@ -63,7 +63,7 @@ function Navbar({ user, onLogout }) {
             to="/login"
             className="rounded-full bg-emerald-500 px-5 py-2 font-semibold text-white hover:bg-emerald-600 transition shadow-sm"
           >
-            Masuk
+            Daftar/Masuk
           </Link>
         )}
       </div>

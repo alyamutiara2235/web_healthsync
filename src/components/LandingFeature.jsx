@@ -12,7 +12,7 @@ function LandingFeature() {
             Fitur Unggulan Kami
           </h2>
           <p className="text-slate-600 max-w-lg mx-auto text-sm md:text-base">
-            Eksplorasi berbagai alat simulasi kesehatan yang dirancang khusus untuk mempermudah pola hidup sehat Anda.
+            Eksplorasi berbagai alat kesehatan yang dirancang khusus untuk mempermudah pola hidup sehat Anda.
           </p>
         </div>
 
