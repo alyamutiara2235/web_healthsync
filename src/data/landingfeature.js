@@ -7,7 +7,6 @@ export const landingFeatureData = [
     description: "Baca informasi dan tips kesehatan terpercaya yang divalidasi oleh para ahli medis setiap hari.",
     linkTo: "/articles",
     linkText: "Buka Artikel",
-    // Menggunakan React.createElement agar tidak memicu error parser JSX
     icon: React.createElement(
       "svg",
       { className: "w-6 h-6", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24" },
@@ -38,10 +37,10 @@ export const landingFeatureData = [
   },
   {
     id: 3,
-    title: "Progres Personalisasi",
-    description: "Pantau perkembangan kesehatan Anda dari waktu ke waktu dengan grafik simulasi yang interaktif.",
+    title: "Analisis Personalisasi",
+    description: "Dapatkan analisis estimasi energi harian (TDEE) dan rekomendasi program kesehatan yang dirancang khusus untuk tubuhmu.",
     linkTo: "/personalization",
-    linkText: "Lihat Progres",
+    linkText: "Mulai Analisis",
     icon: React.createElement(
       "svg",
       { className: "w-6 h-6", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24" },

@@ -11,14 +11,15 @@ import Personalization from "./pages/Personalization";
 
 function App() {
   const [user, setUser] = useState(() => {
-    const isLoggedIn = localStorage.getItem("healthsync_isLoggedIn") === "true";
-    const savedName = localStorage.getItem("healthsync_userName");
+    const isLoggedIn = localStorage.getItem("ruangsehat_isLoggedIn") === "true";
+    const savedName = localStorage.getItem("ruangsehat_userName");
     return isLoggedIn && savedName ? { name: savedName } : null;
   });
 
   const handleLogout = () => {
-    localStorage.removeItem("healthsync_isLoggedIn");
-    localStorage.removeItem("healthsync_userName");
+    localStorage.removeItem("ruangsehat_isLoggedIn");
+    localStorage.removeItem("ruangsehat_userName");
+    localStorage.removeItem("ruangsehat_namaLengkap");
     setUser(null); 
   };
 
@@ -36,7 +37,7 @@ function App() {
           <Route
             path="/calculator"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute user={user}>
                 <Calculator />
               </ProtectedRoute>
             }
@@ -44,7 +45,7 @@ function App() {
           <Route
             path="/personalization"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute user={user}>
                 <Personalization />
               </ProtectedRoute>
             }

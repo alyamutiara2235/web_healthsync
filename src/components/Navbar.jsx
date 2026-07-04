@@ -1,8 +1,13 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 function Navbar({ user, onLogout }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const getMenuClass = ({ isActive }) => 
+    isActive
+      ? "text-emerald-600 font-bold text-sm transition" 
+      : "text-gray-600 hover:text-emerald-600 font-medium text-sm transition"; 
 
   return (
     <nav className="relative flex items-center justify-between bg-white px-6 py-4 shadow-sm border-b border-gray-100">
@@ -11,21 +16,20 @@ function Navbar({ user, onLogout }) {
       </div>
 
       <div className="flex items-center space-x-6">
-        <Link to="/" className="text-gray-600 hover:text-emerald-600 font-medium transition">
+        <NavLink to="/" className={getMenuClass}>
           Beranda
-        </Link>
-        <Link to="/articles" className="text-gray-600 hover:text-emerald-600 font-medium transition">
+        </NavLink>
+        <NavLink to="/articles" className={getMenuClass}>
           Artikel
-        </Link>
-        <Link to="/calculator" className="text-gray-600 hover:text-emerald-600 font-medium transition">
+        </NavLink>
+        <NavLink to="/calculator" className={getMenuClass}>
           Kalkulator
-        </Link>
-        <Link to="/personalization" className="text-gray-600 hover:text-emerald-600 font-medium transition">
+        </NavLink>
+        <NavLink to="/personalization" className={getMenuClass}>
           Personalisasi
-        </Link>
+        </NavLink>
 
         <span className="text-gray-300">|</span>
-
 
         {user ? (
           <div className="relative">

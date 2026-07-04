@@ -1,9 +1,9 @@
 import { Navigate } from "react-router-dom";
 
-function ProtectedRoute({ children }) {
-  const isLoggedIn = localStorage.getItem("healthsync_isLoggedIn") === "true";
+function ProtectedRoute({ user, children }) {
+  const isLoggedIn = localStorage.getItem("ruangsehat_isLoggedIn") === "true";
 
-  if (!isLoggedIn) {
+  if (!user) {
     return <Navigate to="/login" replace />;
   }
 
