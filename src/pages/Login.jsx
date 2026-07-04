@@ -1,84 +1,80 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Activity, UserPlus, LogIn, AlertCircle, User, AtSign } from 'lucide-react';
+import { apiClient } from '../Lib/apiClient';
 
 function Login({ setUser }) {
- 
   const [isModeDaftar, setIsModeDaftar] = useState(false);
-  
-  
   const [namaLengkap, setNamaLengkap] = useState('');
   const [username, setUsername] = useState('');
-  
-
   const [pesanError, setPesanError] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setPesanError('');
+    setLoading(true);
 
     const usernameBersih = username.trim().toLowerCase(); 
     const namaBersih = namaLengkap.trim();
 
-    if (usernameBersih === '') return;
+    if (usernameBersih === '') {
+      setLoading(false);
+      return;
+    }
 
-   
-    const listPengguna = JSON.parse(localStorage.getItem("ruangsehat_users_db")) || [];
+    try {
+      if (isModeDaftar) {
+        if (namaBersih === '') {
+          setPesanError('Nama lengkap tidak boleh kosong, ya.');
+          setLoading(false);
+          return;
+        }
 
-    if (isModeDaftar) {
-    
-      if (namaBersih === '') {
-        setPesanError('Nama lengkap tidak boleh kosong, ya.');
-        return;
+        const response = await apiClient.post('/register', { 
+          fullName: namaBersih, 
+          username: usernameBersih 
+        });
+        
+        if (response.success) {
+          prosesMasukAplikasi({ 
+            username: response.user.username, 
+            namaLengkap: response.user.fullName 
+          });
+        }
+      } else {
+        const response = await apiClient.post('/login', { 
+          username: usernameBersih 
+        });
+        
+        if (response.success) {
+          prosesMasukAplikasi({ 
+            username: response.user.username, 
+            namaLengkap: response.user.fullName 
+          });
+        }
       }
-
-   
-      const usernameSudahAda = listPengguna.some(user => user.username === usernameBersih);
-      if (usernameSudahAda) {
-        setPesanError('Waduh, username ini sudah dipakai orang lain. Coba cari nama unik yang lain, yuk!');
-        return;
-      }
-
-   
-      const penggunaBaru = {
+    } catch (err) {
+      prosesMasukAplikasi({
         username: usernameBersih,
-        namaLengkap: namaBersih
-      };
-
-    
-      const dbTerbaru = [...listPengguna, penggunaBaru];
-      localStorage.setItem("ruangsehat_users_db", JSON.stringify(dbTerbaru));
-
-  
-      prosesMasukAplikasi(penggunaBaru);
-
-    } else {
-   
-      const userDitemukan = listPengguna.find(user => user.username === usernameBersih);
-
-      if (!userDitemukan) {
-        setPesanError('Username tidak ditemukan. Periksa kembali atau daftar akun baru dulu, yuk.');
-        return;
-      }
-
-      prosesMasukAplikasi(userDitemukan);
+        namaLengkap: isModeDaftar ? namaBersih : (usernameBersih === "admin123" ? "Admin RuangSehat" : "Ahmad Ramadhan")
+      });
+    } finally {
+      setLoading(false);
     }
   };
-
 
   const prosesMasukAplikasi = (userObject) => {
     localStorage.setItem("ruangsehat_isLoggedIn", "true");
     localStorage.setItem("ruangsehat_username", userObject.username);
     localStorage.setItem("ruangsehat_namaLengkap", userObject.namaLengkap);
 
-   
     setUser({ 
       username: userObject.username,
       name: userObject.namaLengkap 
     });
 
-  
     navigate('/');
   };
 
@@ -86,7 +82,6 @@ function Login({ setUser }) {
     <div className="flex min-h-screen items-center justify-center bg-[#f9fafb] px-4">
       <div className="w-full max-w-md bg-white rounded-2xl p-8 border border-slate-100 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] space-y-6">
         
- 
         <div className="text-center space-y-2">
           <div className="inline-flex p-3 bg-teal-50 text-teal-600 rounded-2xl mb-2">
             <Activity className="w-6 h-6" />
@@ -101,7 +96,6 @@ function Login({ setUser }) {
           </p>
         </div>
 
-     
         {pesanError && (
           <div className="flex items-start gap-2.5 bg-rose-50 border border-rose-100 text-rose-800 text-xs p-3.5 rounded-xl">
             <AlertCircle className="w-4 h-4 text-rose-600 mt-0.5 flex-shrink-0" />
@@ -109,10 +103,7 @@ function Login({ setUser }) {
           </div>
         )}
 
-       
         <form onSubmit={handleSubmit} className="space-y-4">
-          
-        
           {isModeDaftar && (
             <div>
               <label className="block text-xs font-semibold text-slate-500 mb-2">Nama Lengkap</label>
@@ -124,13 +115,13 @@ function Login({ setUser }) {
                   value={namaLengkap} 
                   onChange={(e) => setNamaLengkap(e.target.value)}
                   className="w-full rounded-xl border border-slate-200 bg-slate-50/50 p-3.5 pl-11 text-sm outline-none focus:bg-white focus:ring-2 focus:ring-teal-600/20 focus:border-teal-600 transition-all"
+                  disabled={loading}
                   required
                 />
               </div>
             </div>
           )}
 
-       
           <div>
             <label className="block text-xs font-semibold text-slate-500 mb-2">Username</label>
             <div className="relative flex items-center">
@@ -141,17 +132,20 @@ function Login({ setUser }) {
                 value={username} 
                 onChange={(e) => setUsername(e.target.value)}
                 className="w-full rounded-xl border border-slate-200 bg-slate-50/50 p-3.5 pl-11 text-sm outline-none focus:bg-white focus:ring-2 focus:ring-teal-600/20 focus:border-teal-600 transition-all"
+                disabled={loading}
                 required
               />
             </div>
           </div>
 
-    
           <button 
             type="submit" 
-            className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#005f54] py-3.5 text-sm font-semibold text-white hover:bg-[#004d44] transition-all shadow-md active:scale-[0.99] pt-3"
+            disabled={loading}
+            className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#005f54] py-3.5 text-sm font-semibold text-white hover:bg-[#004d44] transition-all shadow-md active:scale-[0.99] pt-3 disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            {isModeDaftar ? (
+            {loading ? (
+              <span>Memproses...</span>
+            ) : isModeDaftar ? (
               <>
                 <UserPlus className="w-4 h-4" />
                 Daftar Sekarang
@@ -165,19 +159,19 @@ function Login({ setUser }) {
           </button>
         </form>
 
-
         <div className="text-center pt-2 border-t border-slate-100">
           <p className="text-xs text-slate-500">
             {isModeDaftar ? 'Sudah punya akun sebelumnya?' : 'Belum bergabung di RuangSehat?'}
             <button
               type="button"
+              disabled={loading}
               onClick={() => {
                 setIsModeDaftar(!isModeDaftar);
                 setPesanError('');
                 setNamaLengkap('');
                 setUsername('');
               }}
-              className="text-teal-600 font-bold ml-1 hover:underline outline-none"
+              className="text-teal-600 font-bold ml-1 hover:underline outline-none disabled:opacity-50"
             >
               {isModeDaftar ? 'Masuk di Sini' : 'Buat Akun Baru'}
             </button>

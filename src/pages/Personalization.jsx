@@ -1,14 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PersonalizationForm from '../components/PersonalizationForm';
 import PersonalizationResult from '../components/PersonalizationResult'; 
+
 function Personalization() {
-  const [usia, setUsia] = useState('');
-  const [jenisKelamin, setJenisKelamin] = useState('');
-  const [berat, setBerat] = useState('');
-  const [tinggi, setTinggi] = useState('');
-  const [ritmeHarian, setRitmeHarian] = useState('');
-  const [kebiasaan, setKebiasaan] = useState([]);
-  const [hasilKalkulasi, setHasilKalkulasi] = useState(null);
+  const getInitialProfile = () => {
+    const saved = localStorage.getItem('ruangsehat_profile');
+    return saved ? JSON.parse(saved) : null;
+  };
+
+  const initialProfile = getInitialProfile();
+
+  const [usia, setUsia] = useState(initialProfile?.usia || '');
+  const [jenisKelamin, setJenisKelamin] = useState(initialProfile?.jenisKelamin || '');
+  const [berat, setBerat] = useState(initialProfile?.berat || '');
+  const [tinggi, setTinggi] = useState(initialProfile?.tinggi || '');
+  const [ritmeHarian, setRitmeHarian] = useState(initialProfile?.ritmeHarian || '');
+  const [kebiasaan, setKebiasaan] = useState(initialProfile?.kebiasaan || []);
+  const [hasilKalkulasi, setHasilKalkulasi] = useState(initialProfile?.hasilKalkulasi || null);
+  
+  const [isFormValid, setIsFormValid] = useState(false);
+
+  useEffect(() => {
+    const isValid = 
+      usia !== '' && parseFloat(usia) > 0 &&
+      berat !== '' && parseFloat(berat) > 0 &&
+      tinggi !== '' && parseFloat(tinggi) > 0 &&
+      jenisKelamin !== '';
+      
+    setIsFormValid(isValid);
+  }, [usia, berat, tinggi, jenisKelamin]);
+
+  useEffect(() => {
+    const profileData = { usia, jenisKelamin, berat, tinggi, ritmeHarian, kebiasaan, hasilKalkulasi };
+    localStorage.setItem('ruangsehat_profile', JSON.stringify(profileData));
+  }, [usia, jenisKelamin, berat, tinggi, ritmeHarian, kebiasaan, hasilKalkulasi]);
 
   const toggleKebiasaan = (namaKebiasaan) => {
     if (kebiasaan.includes(namaKebiasaan)) {
@@ -20,8 +45,9 @@ function Personalization() {
 
   const hitungKebutuhanKesehatan = (e) => {
     e.preventDefault();
-    if (!usia || !berat || !tinggi || !jenisKelamin) {
-      alert('Silakan lengkapi semua data profil Anda terlebih dahulu.');
+    
+    if (!isFormValid) {
+      alert('Silakan lengkapi semua data profil Anda terlebih dahulu dengan benar.');
       return;
     }
 
@@ -79,6 +105,7 @@ function Personalization() {
           ritmeHarian={ritmeHarian} setRitmeHarian={setRitmeHarian}
           kebiasaan={kebiasaan} toggleKebiasaan={toggleKebiasaan}
           onSubmit={hitungKebutuhanKesehatan}
+          isFormValid={isFormValid} 
         />
 
         <PersonalizationResult hasilKalkulasi={hasilKalkulasi} />
